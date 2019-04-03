@@ -3,7 +3,7 @@ class User < ApplicationRecord
         validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP,
              message: "You must use a valid e-mail address" }
         validates :name, presence: true
-        validates :password, presence: true, length: { in: 8..12 }
+        validates :password, presence: true, length: { in: 8..12 }, format: { with: /\A[A-Z0-9]+\Z/i }
         validates :phone, presence: true, 
                           length: { in: 9..12 },
                           numericality: { only_integer: true } 
