@@ -9,6 +9,7 @@ class Event < ApplicationRecord
 
   # As in https://guides.rubyonrails.org/v2.3.11/activerecord_validations_callbacks.html#creating-custom-validation-methods
   validate :start_date_cannot_be_in_the_past
+  validate :check_event_uniqueness
 
   def start_date_cannot_be_in_the_past
     errors.add(:start_date, "Start date must be after creation date") if
