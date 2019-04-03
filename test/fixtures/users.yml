@@ -2,14 +2,16 @@
 
 one:
   name: MyString
-  lastname: MyString
+  last_name: MyString
   email: MyString
+  phone: MyString
   password: MyString
-  address: MyString
+  user_address: MyString
 
 two:
   name: MyString
-  lastname: MyString
+  last_name: MyString
   email: MyString
+  phone: MyString
   password: MyString
-  address: MyString
+  user_address: MyString

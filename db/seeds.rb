@@ -5,78 +5,61 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-users = [User.new(name:'Claudio', lastname:'Alvarez', \
-              password:'123456', email:'calvarez1@miuandes.cl', \
-              address:'San Carlos de Apoquindo'), 
-         User.new(name:'Juan', lastname:'Rataplan', \
-              password:'123456', email:'jrataplan@miuandes.cl', \
-              address:'San Carlos de Apoquindo'),
-         User.new(name:'Raul', lastname:'Rabufetti', \
-              password:'123456', email:'rrabufetti@miuandes.cl', \
-              address:'San Carlos de Apoquindo'),
-         User.new(name:'Raul', lastname:'Ganfolfi', \
-              password:'123456', email:'rgandolfi@miuandes.cl', \
-              address:'San Carlos de Apoquindo'),
-         User.new(name:'Licenciado', lastname:'Varela', \
-              password:'123456', email:'lvarela@miuandes.cl', \
-              address:'San Carlos de Apoquindo')]
-              
-for u in users do
-  u.save!
-end 
 
-event_venues = [EventVenue.new(name: 'Estadio Nacional', address:'Maraton', capacity: 60000),\
-                EventVenue.new(name: 'Estadio Monumental', address:'Exequiel', capacity: 25000),\
-                EventVenue.new(name: 'Movistar Arena', address:'Matta', capacity: 15000)]
-                
-for ev in event_venues do
-  ev.save!
-end 
+users = User.create([{ name: 'Jaime' , last_name: 'Auger' , email: 'jiauger@miuandes.cl' , phone: '981944367' , password: 'microlab' , user_address: 'rodrigo de triana' }, 
+                     { name: 'Rodrigo' , last_name: 'Peña' , email: 'rpena@miuandes.cl' , phone: '235835238' , password: 'hackerrrr' , user_address: 'las vistimas' }, 
+                     { name: 'Cristobal' , last_name: 'Uslar' , email: 'cuslar@miuandes.cl' , phone: '62432487' , password: '294-ccllkk' , user_address: 'carmencita' }, 
+                     { name: 'Vicente' , last_name: 'Zoto' , email: 'vazoto@miuandes.cl' , phone: '234678876' , password: 'zeldaethf' , user_address: 'la gloria' }, 
+                     { name: 'Fabian' , last_name: 'Coverg' , email: 'fcoverg@miuandes.cl' , phone: '92735351' , password: 'chiquitass' , user_address: 'las verbenas' }
+                     ])
 
-events = [Event.new(name:'Festival de la Cancion', description: 'Puro reggaeton',\
-          start_date: '2019-03-01', event_venue: event_venues[0]),
-          Event.new(name:'Twisted Sister', description: 'Puro rock',\
-          start_date: '2019-04-01', event_venue: event_venues[1]),
-          Event.new(name:'Bad Bunny', description: 'Puro Trap',\
-          start_date: '2019-05-01', event_venue: event_venues[2])]
+h = User.all[0]
+i = User.all[1]
+j = User.all[2]
+k = User.all[3]
+l = User.all[4]
 
-for e in events do
-  e.save!
-end 
+venues = Venue.create([{name:'Estadio Nacionaaaaaaaaaaal', address:'Grecia', capacity:'60000'}])
 
-ticket_zones = [TicketZone.new(zone: 'Cancha'),\
-                TicketZone.new(zone: 'Pacifico'),\
-                TicketZone.new(zone: 'Pacifico VIP')]
+events = Event.create([{ name: 'Bon jovi', description: 'concierto', start_date: DateTime.new(2020,9,1,19), venue: venues[0] },
+                       { name: 'Lady Gaga', description: 'beneficencia', start_date: DateTime.new(2021,9,1,19), venue: venues[0] }, 
+                       { name: 'Los Pulentos', description: 'show', start_date: DateTime.new(2022,9,1,17), venue: venues[0] 
+                       }])
 
-for tz in ticket_zones do
-  tz.save!
-end 
+d = Event.find_by(name: 'Bon jovi')
+e = Event.find_by(name: 'Lady Gaga')
+f = Event.find_by(name: 'Los Pulentos')
 
-prices = [20000, 30000, 40000]
+categories = Category.create([{name: 'Platea', price: 10000 },{ name: 'Oro', price: 20000 }, {name: 'Andes', price: 30000}])
+a = Category.find_by(name: 'Platea')
+b = Category.find_by(name: 'Oro')
+c = Category.find_by(name: 'Andes')
 
-ticket_types = []
+Order.create({amount: 10000, user: User.first, date: Date.today})
 
-for e in events do
-  i = 0
-  for t in ticket_zones do
-      ticket_types << TicketType.new(price: prices[i], ticket_zone: t, event: e)
-      i += 1
-  end
-end
 
-for tt in ticket_types do
-  tt.save!
-end 
+tickets = Ticket.create(
+    [{  event: d, category: a, user: h, order: Order.first },
+     {  event: e, category: b, user: h, order: Order.first },
+     {  event: f, category: c, user: h, order: Order.first },
+     {  event: d, category: a, user: i, order: Order.first },
+     {  event: e, category: a, user: i, order: Order.first },
+     {  event: f, category: a, user: i, order: Order.first },
+     {  event: d, category: b, user: j, order: Order.first },
+     {  event: e, category: b, user: j, order: Order.first },
+     {  event: f, category: b, user: j, order: Order.first },
+     {  event: d, category: c, user: k, order: Order.first },
+     {  event: e, category: c, user: k, order: Order.first },
+     {  event: f, category: c, user: k, order: Order.first },
+     {  event: d, category: a, user: l, order: Order.first },
+     {  event: e, category: a, user: l, order: Order.first },
+     {  event: f, category: b, user: l, order: Order.first }])
 
-for u in users do
-  for e in events do
-    o = Order.new(user: u)
-    o.save!
-    tts = TicketType.where(event:e)
-    tt = tts.sample # get any ticket type available
-    t = Ticket.new(order:o, ticket_type:tt)
-    t.save!
-  end
-end
+
+
+
+
+
+
 
 

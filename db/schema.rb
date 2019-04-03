@@ -10,64 +10,62 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_29_134851) do
+ActiveRecord::Schema.define(version: 20190403130852) do
 
-  create_table "event_venues", force: :cascade do |t|
+  create_table "categories", force: :cascade do |t|
     t.string "name"
-    t.string "address"
-    t.integer "capacity"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "price"
   end
 
   create_table "events", force: :cascade do |t|
     t.string "name"
     t.string "description"
-    t.date "start_date"
-    t.integer "event_venue_id"
+    t.datetime "start_date"
+    t.integer "venue_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["event_venue_id"], name: "index_events_on_event_venue_id"
+    t.index ["venue_id"], name: "index_events_on_venue_id"
   end
 
   create_table "orders", force: :cascade do |t|
+    t.integer "amount"
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "date"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
-  create_table "ticket_types", force: :cascade do |t|
-    t.integer "event_id"
-    t.integer "price"
-    t.integer "ticket_zone_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["event_id"], name: "index_ticket_types_on_event_id"
-    t.index ["ticket_zone_id"], name: "index_ticket_types_on_ticket_zone_id"
-  end
-
-  create_table "ticket_zones", force: :cascade do |t|
-    t.string "zone"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "tickets", force: :cascade do |t|
-    t.integer "ticket_type_id"
-    t.integer "order_id"
+    t.integer "event_id"
+    t.integer "category_id"
+    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "order_id"
+    t.index ["category_id"], name: "index_tickets_on_category_id"
+    t.index ["event_id"], name: "index_tickets_on_event_id"
     t.index ["order_id"], name: "index_tickets_on_order_id"
-    t.index ["ticket_type_id"], name: "index_tickets_on_ticket_type_id"
+    t.index ["user_id"], name: "index_tickets_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
     t.string "name"
-    t.string "lastname"
+    t.string "last_name"
     t.string "email"
+    t.string "phone"
     t.string "password"
+    t.string "user_address"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "venues", force: :cascade do |t|
+    t.string "name"
     t.string "address"
+    t.integer "capacity"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
